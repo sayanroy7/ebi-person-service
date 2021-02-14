@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: ebi-person-service
+  data:
+    mongodb:
+      uri: mongodb://ebi-person-service:ZWJpLXBlcnNvbi1zZXJ2aWNl@127.0.0.1:27017/ebi-person-service
+#      uri: mongodb://ebi-person-service:ZWJpLXBlcnNvbi1zZXJ2aWNl@ebi-person-service-mongod:27017/ebi-person-service
+
+management:
+  info:
+    git:
+      mode: full
+  endpoints:
+    web:
+      base-path: /management/
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+    restart:
+      enabled: true
+  metrics:
+    export:
+      datadog:
+        enabled: false
+
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /docs/v2/api-docs

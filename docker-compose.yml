@@ -1,0 +1,22 @@
+version: '3.3'
+services:
+  ebi-person-service-mongod:
+    container_name: ebi-person-service-mongod-c
+    image: mongo:3.6
+    restart: always
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+      - MONGO_INITDB_DATABASE=ebi-person-service
+    ports:
+      - 27017:27017
+    command: mongod --smallfiles --logpath=/dev/null # --quiet
+    volumes:
+      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - shared-net
+networks:
+  shared-net:
+    driver: bridge
