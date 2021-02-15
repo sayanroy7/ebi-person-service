@@ -79,7 +79,7 @@ This `access_token` could be used to call the `/person` endpoints.
 Example in curl -
 
 ```shell script
-curl http://localhost:8080/person/fdjdkjf -H 'Content-Type: application/json' \
+curl http://localhost:8080/person -H 'Content-Type: application/json' \
 -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiZWJpLWF1dGgtc2VydmljZSIsInNjb3BlIjpbImViaTp1c2VyIl0sImlhdCI6MTYxMzM4MDM2NSwiZXhwIjoxNjEzMzgwNTQ1fQ.-THwQGEuzrolOspxrq2FZ-SZjYgdkaeV5qIOBR9eHxU'
 ```  
 
