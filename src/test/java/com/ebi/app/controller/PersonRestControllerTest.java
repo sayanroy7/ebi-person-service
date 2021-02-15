@@ -1,5 +1,6 @@
 package com.ebi.app.controller;
 
+import com.ebi.app.EnableMockSecurityTestConfig;
 import com.ebi.app.TestDataUtils;
 import com.ebi.app.WithMockSecurity;
 import com.ebi.app.model.web.request.PersonDTO;
@@ -30,11 +31,14 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringJUnitWebConfig
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = { PersonRestController.class, RestExceptionHandler.class })
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = { PersonRestController.class, RestExceptionHandler.class,
+        EnableMockSecurityTestConfig.class})
 @EnableWebMvc
 @AutoConfigureMockMvc
 class PersonRestControllerTest {
@@ -78,6 +82,7 @@ class PersonRestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
         var result = mockMvc.perform(requestBuilder)
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(expectedResponse)))
                 .andReturn();
@@ -99,8 +104,7 @@ class PersonRestControllerTest {
     }
 
     @Test
-    @Disabled
-    @WithMockSecurity(username = "admin", password = "admin", scopes = "ebi:admin")
+    @WithMockSecurity(username = "admin", password = "admin", scopes = {"ebi:admin"})
     void deletePerson() throws Exception {
         var personDTO = personResponseDTOS.get(0);
         var personID = UUID.randomUUID().toString();
@@ -110,9 +114,11 @@ class PersonRestControllerTest {
 
         var requestBuilder = MockMvcRequestBuilders
                 .delete("/person/{id}", personID)
+                .with(csrf().asHeader())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
         var result = mockMvc.perform(requestBuilder)
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(expectedResponse)))
                 .andReturn();
