@@ -7,7 +7,7 @@ import org.springframework.context.ApplicationContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = {EnableMockSecurityTestConfig.class})
 class EbiPersonServiceApplicationTests {
 
     @Autowired
