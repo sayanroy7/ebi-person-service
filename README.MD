@@ -83,6 +83,18 @@ curl http://localhost:8080/person/fdjdkjf -H 'Content-Type: application/json' \
 -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiZWJpLWF1dGgtc2VydmljZSIsInNjb3BlIjpbImViaTp1c2VyIl0sImlhdCI6MTYxMzM4MDM2NSwiZXhwIjoxNjEzMzgwNTQ1fQ.-THwQGEuzrolOspxrq2FZ-SZjYgdkaeV5qIOBR9eHxU'
 ```  
 
+Curl to create Person - HTTP POST
+
+```shell script
+curl -X POST http://localhost:8080/person -H 'Content-Type: application/json' \
+-H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiZWJpLWF1dGgtc2VydmljZSIsInNjb3BlIjpbImViaTp1c2VyIl0sImlhdCI6MTYxMzM5MTUxMSwiZXhwIjoxNjEzMzkxNjkxfQ.j4R9GlLFw3T0-OG0yuHrmPsWQrYA_v6ArJbzdOWtEVI' -d  '{
+    "first_name": "John",
+    "last_name": "G",
+    "age": "19",
+    "favourite_colour": "Orange"
+  }'
+```
+
 ## Data Store - MongoDB
 
 The data store is loosely implemented using mongoDB, and could be replaced
