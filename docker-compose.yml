@@ -17,6 +17,21 @@ services:
       - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     networks:
       - shared-net
+  ebi-person-service:
+    build:
+      context: .
+    image: ebi-person-service:latest
+    container_name: ebi-person-service-c
+    ports:
+      - 8080:8080
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
+    depends_on:
+      - ebi-person-service-mongod
+    links:
+      - ebi-person-service-mongod
+    networks:
+      - shared-net
 networks:
   shared-net:
     driver: bridge

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +30,7 @@ public class PersonRestController {
             @ApiResponse(code = 404, message = "The Person doesn't exist", response = ErrorResponse.class),
             @ApiResponse(code = 500, message = "Internal Server Error", response = ErrorResponse.class) })
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAnyAuthority('ebi:user', 'ebi:admin')")
     public ResponseEntity<WebApiResponse<PersonDTO>> getPerson(
             @ApiParam(name = "id", value = "id of the person to be retrieved", required = true, example = "634dfdedrdgdret334344df")
             @PathVariable String id) {
@@ -49,6 +51,7 @@ public class PersonRestController {
             @ApiResponse(code = 404, message = "Persons do not exist", response = ErrorResponse.class),
             @ApiResponse(code = 500, message = "Internal Server Error", response = ErrorResponse.class) })
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAnyAuthority('ebi:user', 'ebi:admin')")
     public ResponseEntity<WebApiResponse<Persons>> getPersons(
             @ApiParam(name = "page", value = "page number to query the available persons", defaultValue = "0")
             @RequestParam(defaultValue = "0") int page,
@@ -71,6 +74,7 @@ public class PersonRestController {
             @ApiResponse(code = 400, message = "Bad request", response = ErrorResponse.class),
             @ApiResponse(code = 500, message = "Internal Server Error", response = ErrorResponse.class) })
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ebi:admin')")
     public ResponseEntity<WebApiResponse<PersonDTO>> savePerson(
             @ApiParam(name = "person", value = "PersonDTO", required = true, type = "com.ebi.app.model.web.request.PersonDTO")
             @RequestBody @Valid com.ebi.app.model.web.request.PersonDTO personRequest,
@@ -89,10 +93,11 @@ public class PersonRestController {
             @ApiResponse(code = 404, message = "Person not found", response = ErrorResponse.class),
             @ApiResponse(code = 500, message = "Internal Server Error", response = ErrorResponse.class) })
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ebi:admin')")
     public ResponseEntity<WebApiResponse<PersonDTO>> updatePerson(
             @ApiParam(name = "id", value = "id of the person to be updated", required = true, example = "634dfdedrdgdret334344df")
             @PathVariable String id,
-            @ApiParam(name = "subscription", value = "Subscription parameters", required = true, type = "com.sensus.xc.ar.domain.Subscription")
+            @ApiParam(name = "personDTO", value = "PersonDTO", required = true, type = "com.ebi.app.model.web.request.PersonDTO")
             @RequestBody @Valid com.ebi.app.model.web.request.PersonDTO personRequest,
             BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -115,6 +120,7 @@ public class PersonRestController {
             @ApiResponse(code = 404, message = "The Person doesn't exist", response = ErrorResponse.class),
             @ApiResponse(code = 500, message = "Internal Server Error", response = ErrorResponse.class) })
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ebi:admin')")
     public ResponseEntity<WebApiResponse<PersonDTO>> deletePerson(
             @ApiParam(name = "id", value = "id of the person to be deleted", required = true, example = "634dfdedrdgdret334344df")
             @PathVariable String id) {

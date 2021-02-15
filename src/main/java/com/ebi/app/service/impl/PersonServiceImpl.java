@@ -44,8 +44,9 @@ public class PersonServiceImpl implements PersonService {
                 .lastName(personDTO.getLastName()).age(personDTO.getAge())
                 .favouriteColour(personDTO.getFavouriteColour()).build());
         return PersonDTO.builder().firstName(savedPerson.getFirstName())
-                .lastName(savedPerson.getLastName()).age(savedPerson.getAge())
-                .favouriteColour(savedPerson.getFavouriteColour()).build();
+                .id(savedPerson.getId()).lastName(savedPerson.getLastName())
+                .age(savedPerson.getAge()).favouriteColour(savedPerson
+                        .getFavouriteColour()).build();
     }
 
     @Override

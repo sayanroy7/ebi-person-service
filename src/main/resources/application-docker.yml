@@ -3,8 +3,8 @@ spring:
     name: ebi-person-service
   data:
     mongodb:
-      uri: mongodb://ebi-person-service:ZWJpLXBlcnNvbi1zZXJ2aWNl@127.0.0.1:27017/ebi-person-service
-#      uri: mongodb://ebi-person-service:ZWJpLXBlcnNvbi1zZXJ2aWNl@ebi-person-service-mongod:27017/ebi-person-service
+#      uri: mongodb://ebi-person-service:ZWJpLXBlcnNvbi1zZXJ2aWNl@127.0.0.1:27017/ebi-person-service
+      uri: mongodb://ebi-person-service:ZWJpLXBlcnNvbi1zZXJ2aWNl@ebi-person-service-mongod:27017/ebi-person-service
 
 management:
   info:
@@ -30,11 +30,3 @@ springfox:
     swagger:
       v2:
         path: /docs/v2/api-docs
-
-
-security:
-  issuer: ebi-auth-service
-  api-audience: ebi-userinfo
-  jwt:
-    token:
-      secret-key: ebi-auth-service-signing-key-256

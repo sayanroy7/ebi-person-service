@@ -29,7 +29,18 @@ public class TestDataUtils {
         var personJson = Files
                 .lines(Paths.get("src/test/resources/persons.json"), StandardCharsets.UTF_8)
                 .collect(Collectors.joining());
-        return objectMapper.readValue(personJson, new TypeReference<List<PersonDTO>>() {});
+        return objectMapper.readValue(personJson, new TypeReference<>() {});
+    }
+
+    public static List<com.ebi.app.model.web.response.PersonDTO> getPersonsResponseDTO(ObjectMapper objectMapper) throws IOException {
+        var personJson = Files
+                .lines(Paths.get("src/test/resources/persons.json"), StandardCharsets.UTF_8)
+                .collect(Collectors.joining());
+        var personDTOS =  objectMapper.readValue(personJson, new TypeReference<List<PersonDTO>>(){});
+        return personDTOS.stream().map(p -> com.ebi.app.model.web.response.PersonDTO.builder()
+                .firstName(p.getFirstName()).lastName(p.getLastName())
+                .age(p.getAge()).favouriteColour(p.getFavouriteColour())
+                .build()).collect(Collectors.toList());
     }
 
 }
